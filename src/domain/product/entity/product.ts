@@ -34,6 +34,14 @@ export default class Product implements ProductInterface {
     this.validate();
   }
 
+  toJSON() {
+    return {
+      id: this._id,
+      name: this._name,
+      price: this._price,
+    };
+  }
+
   validate(): boolean {
     if (this._id.length === 0) {
       throw new Error("Id is required");

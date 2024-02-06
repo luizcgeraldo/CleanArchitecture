@@ -1,21 +1,18 @@
-import Product from "../entity/product";
-import ProductInterface from "../entity/product.interface";
-import { v4 as uuid } from "uuid";
-import ProductB from "../entity/product-b";
+import crypto from "crypto";
 
-export default class ProductFactory {
-  public static create(
-    type: string,
-    name: string,
-    price: number
-  ): ProductInterface {
-    switch (type) {
-      case "a":
-        return new Product(uuid(), name, price);
-      case "b":
-        return new ProductB(uuid(), name, price);
-      default:
-        throw new Error("Product type not supported");
-    }
+import Product from "../../../domain/product/entity/product";
+
+interface CreateProductInterface {
+  name: string;
+  price: number;
+}
+
+export class ProductFactory {
+  public static create(data: CreateProductInterface) {
+    const { name, price } = data;
+
+    const uuid = crypto.randomUUID();
+
+    return new Product(uuid, name, price);
   }
 }
