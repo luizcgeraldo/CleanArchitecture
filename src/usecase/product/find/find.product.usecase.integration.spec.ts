@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize-typescript";
 
-import  ProductModel  from "../../../infrastructure/product/repository/sequelize/product.model";
+import  { ProductModel }   from "../../../infrastructure/product/repository/sequelize/product.model";
 import  ProductRepository  from "../../../infrastructure/product/repository/sequelize/product.repository";
 
 import { InputFindProductDto, OutputFindProductDto } from "./find.product.dto";
