@@ -1,6 +1,6 @@
 import crypto from "crypto";
 
-import Product from "../../../domain/product/entity/product";
+import { Product } from "../../../domain/product/entity/product";
 
 interface CreateProductInterface {
   name: string;
