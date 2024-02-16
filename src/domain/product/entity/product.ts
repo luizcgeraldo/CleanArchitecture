@@ -1,36 +1,64 @@
-import ProductInterface from "./product.interface";
+import Entity from "../../@shared/entity/entity.abstract";
+import NotificationError from "../../@shared/notification/notification.error";
 
-export default class Product implements ProductInterface {
-  private _id: string;
+export class Product extends Entity {
+  private context = "product";
   private _name: string;
   private _price: number;
 
   constructor(id: string, name: string, price: number) {
+    super();
+
     this._id = id;
     this._name = name;
     this._price = price;
     this.validate();
+
+    if (this.notification.hasErrors()) {
+      throw new NotificationError(this.notification.getErrors());
+    }
   }
 
-  get id(): string {
+  validate() {
+    if (this.id.length === 0) {
+      this.notification.addError({
+        context: this.context,
+        message: "Id is required",
+      })
+    }
+    if (this.name.length === 0){
+      this.notification.addError({
+        context: this.context,
+        message: "Name is required",
+      })
+    }
+  }
+
+  get id() {
     return this._id;
   }
-  
-  get name(): string {
+
+  get name() {
     return this._name;
   }
 
-  get price(): number {
+  get price() {
     return this._price;
   }
 
-  changeName(name: string): void {
+  changeName(name: string) {
     this._name = name;
     this.validate();
   }
 
-  changePrice(price: number): void {
+  changePrice(price: number) {
     this._price = price;
+    this.validate();
+  }
+
+  applyDiscount(discountPercentage: number) {
+    const discount = this._price * discountPercentage / 100;
+    this._price = this._price - discount;
     this.validate();
   }
 
@@ -40,18 +68,5 @@ export default class Product implements ProductInterface {
       name: this._name,
       price: this._price,
     };
-  }
-
-  validate(): boolean {
-    if (this._id.length === 0) {
-      throw new Error("Id is required");
-    }
-    if (this._name.length === 0) {
-      throw new Error("Name is required");
-    }
-    if (this._price < 0) {
-      throw new Error("Price must be greater than zero");
-    }
-    return true;
   }
 }

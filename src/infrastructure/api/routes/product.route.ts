@@ -12,7 +12,6 @@ export const productRoute = express.Router();
 productRoute.post("/", async (req: Request, res: Response) => {
     const productRepository = new ProductRepository();
     const useCase = new CreateProductUseCase(productRepository);
-    console.log(req.body.name);
 
     try {
         const productDto: InputCreateProductDto = {
