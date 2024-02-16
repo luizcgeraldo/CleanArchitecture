@@ -1,4 +1,5 @@
 import { Product } from "./product";
+import Notification from "../../@shared/notification/notification";
 
 describe("Product unit tests", () => {
   it("should throw error when id is empty", () => {
@@ -57,6 +58,17 @@ describe("Product unit tests", () => {
       name: "Product 1",
       price: 100,
     });
+  });
+
+  it("should check if notification has at least one error", () => {
+    const notification = new Notification();
+    const error = {
+      message: "error message",
+      context: "product",
+    };
+    notification.addError(error);
+
+    expect(notification.hasErrors()).toBe(true);
   });
 
 });
