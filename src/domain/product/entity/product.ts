@@ -32,6 +32,19 @@ export class Product extends Entity {
          message: "Name is required",
        });
      }
+     if(this.price.toString().length === 0) {
+       this.notification.addError({
+         context: this.context,
+         message: "Price is required",
+       });
+     }
+     if(this.price <= 0) {
+       this.notification.addError({
+         context: this.context,
+         message: "Price must be greater than zero",
+       });
+     }
+
   }
 
   get id() {
