@@ -1,5 +1,4 @@
 import Entity from "../../@shared/entity/entity.abstract";
-import { ProductValidatorFactory } from "../factory/product.validator.factory";
 import NotificationError from "../../@shared/notification/notification.error";
 
 
@@ -21,9 +20,18 @@ export class Product extends Entity {
   }
 
   validate() {
-    const productValidator = ProductValidatorFactory.create();
-    productValidator.validate(this);
-    this.notification.throwErrorIfHasErrors();
+     if(this.id.length === 0) {
+       this.notification.addError({
+         context: this.context,
+         message: "Id is required",
+       });
+     }
+     if(this.name.length === 0) {
+       this.notification.addError({
+         context: this.context,
+         message: "Name is required",
+       });
+     }
   }
 
   get id() {
